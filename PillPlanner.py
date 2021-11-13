@@ -1,8 +1,8 @@
 import PySimpleGUI as sg
 
-sg.theme = 'monoblue'  # please make your windows colorful
+sg.theme= 'monoblue' # please make your windows colorful
 
-layout = [[sg.Button('Input Medication')],
+layout = [[sg.Button('Input Medication',element_justification='c')],
           [sg.Input(key='-IN-')],
           [sg.Button('Show', size=(50,5)), sg.Button('Exit')]]
 
@@ -20,6 +20,4 @@ while True:  # Event Loop
         # change the "output" element to be the value of "input" element
         window['-OUTPUT-'].update(values['-IN-'])
 
-window.close(
-
-#hello there
+window.close()
