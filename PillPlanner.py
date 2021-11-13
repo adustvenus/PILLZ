@@ -36,7 +36,7 @@ def pill_adder_button():
     [
         [sg.Text("Day of the Week Doses are Taken:")],
         [sg.Input(key="-day-")]
-    ]
+    ],
     [
         [sg.Button("Submit Medication")]
     ]
