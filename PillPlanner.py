@@ -20,4 +20,4 @@ while True:  # Event Loop
         # change the "output" element to be the value of "input" element
         window['-OUTPUT-'].update(values['-IN-'])
 
-window.close()
+window.close(
