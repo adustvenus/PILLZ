@@ -22,30 +22,26 @@ title = [sg.Text('~ Pill Planner ~ ',
 #
 def pill_adder_button():
     layout = [
-        [sg.Button('Input Medication')],
-          [sg.Input(key='-med-')],
-          [sg.Button('Show', size=(20,1)),
+        [sg.Text('Medication Name:')],
+        [sg.Input(key='-med-')],
+    
+    [
+        [sg.Text('Cost per Bottle/Unit:')],
+        [sg.Input(key='-cost-')]
     ],
     [
-        [sg.Button('Cost')],
-        [sg.Input(key='-cost-')],
-        [sg.Button('show', size=(20,1))],
+        [sg.Text('Number of Pills/Doses per Day:')],
+        [sg.Input(key='-week-')]
     ],
     [
-        [sg.Button('weekly amount')],
-        [sg.Input(key='-week-')],
-        [sg.Button('show', size=(20,1))],
-    ],
-    [
-        [sg.Button("Day of the Week")],
-        [sg.Input(key="-day-")],
-        [sg.Button('show', size=(20,1))]
+        [sg.Text("Day of the Week Doses are Taken:")],
+        [sg.Input(key="-day-")]
     ]
 ]
 
     window = sg.Window("Medication Adder", 
                        layout,
-                       size = (1000, 750),
+                       size = (800, 500),
                        resizable = True,
                        modal = True)
     while True:
@@ -54,6 +50,7 @@ def pill_adder_button():
             break
         
     window.close()
+    return 
 #
 #Title Page
 #
@@ -85,17 +82,18 @@ daysofweek = [sg.Table(values=data[1:][:], headings=headings, max_col_width=25,
                     row_height=25)
     ]
 
-layout = [
-            daysofweek,
+layout = [  
             title,
             [sg.Button('Add Pill'), ],
-            [sg.Button('Show', size=(20,5)),  sg.Button('Exit')]
+            daysofweek,
+            [sg.Button('Show', size=(8,2))],
+            [sg.Button('Exit')]
          ]
 
 
 window = sg.Window('TAKE YOUR FUCKING PILLZ!!', 
                    layout,
-                   size = (1500, 1000),
+                   size = (1000, 750),
                    resizable = False)
 
 
