@@ -37,6 +37,9 @@ def pill_adder_button():
         [sg.Text("Day of the Week Doses are Taken:")],
         [sg.Input(key="-day-")]
     ]
+    [
+        [sg.Button("Submit Medication")]
+    ]
 ]
 
     window = sg.Window("Medication Adder", 
@@ -48,6 +51,7 @@ def pill_adder_button():
         event, values = window.read()
         if event == "Exit" or event == sg.WIN_CLOSED:
             break
+        
         
     window.close()
     return 
