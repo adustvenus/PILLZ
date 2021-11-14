@@ -120,7 +120,7 @@ for i in range(rows):
 
 layout = [  
             title,
-            [sg.Button('Add Pill'), sg.Button('Refresh')],
+            [sg.Button('Add Pill')],
             
             [sg.Table(values=data1, headings=headings, max_col_width=30,
               background_color='dark blue',
@@ -156,9 +156,6 @@ window = sg.Window('Pharm-Tracker',
 while True:  # Event Loop
     event, values = window.read()
     print(event, values)
-    if event == 'Refresh':
-        window['-TABLE2-'].Update(rows)
-        print("FUCK")
     if event == sg.WIN_CLOSED or event == 'Exit':
         break
     if event == 'Add Pill':
