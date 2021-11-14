@@ -32,6 +32,7 @@ def pill_adder_button():
                        layout,
                        size = (800, 500),
                        resizable = True,
+                       disable_close = True,
                        modal = True)
     event, values = window.read()
     window.close()
@@ -60,6 +61,7 @@ headings2 = ['Pill', 'Cost ($)']
 table1data = []
 holder = []
 price = []
+amountofpills = []
 
 pillzdata = open("Pillz.txt","r")
 readdata = pillzdata.readlines()
@@ -70,7 +72,16 @@ for i in readdata:
     if len(holder) == 5:
         table1data.append(holder)
         price.append(holder[3])
+        amountofpills.append(holder[4])
         holder = []
+
+amountofpills = [s.replace("\n", "") for s in amountofpills]
+weeklycost = 0
+for i in amountofpills:
+    if i == "":
+        i=0
+    i = int(i)
+    weeklycost = i + weeklycost
 
 data1 = [["You", "Need", "To", "Add", "Your", "Pills", "Above"]]
 for i in range(rows):
@@ -121,7 +132,7 @@ layout = [
               hide_vertical_scroll = True,
               key='-TABLE2-',
               row_height=20)],
-            #[sg.Text('Price Per Week of medications:' + ())]
+            [sg.Text('Price Per Week of medications:' + str(weeklycost))],
             [sg.Button('Exit')]
 ]
 
@@ -135,12 +146,10 @@ window = sg.Window('Pharm-Tracker',
 
 
 while True:  # Event Loop
-
-
     event, values = window.read()
     print(event, values)
-    if event == 'Refresh Page':
-        window.Refresh()
+    if event == 'Refresh':
+        print("FUCK")
     if event == sg.WIN_CLOSED or event == 'Exit':
         break
     if event == 'Add Pill':
