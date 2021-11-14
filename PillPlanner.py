@@ -1,12 +1,11 @@
 import PySimpleGUI as sg
 import random
 import string
-
 sg.theme= 'monoblue' # please make your windows colorful
 
 #
 #Initialize variables for pages
-#
+
 
 font = ("Impact", 31)
 
@@ -42,7 +41,7 @@ def pill_adder_button():
         [sg.Button("Submit Medication")]
     ]
 ]
-    pillz = {}
+
     window = sg.Window("Medication Adder", 
                        layout,
                        size = (800, 500),
@@ -58,7 +57,7 @@ def pill_adder_button():
         
         
     window.close()
-    return  pillz
+    return 
 #
 #Title Page
 #
@@ -78,22 +77,21 @@ def make_table(num_rows, num_cols):
 data = make_table(num_rows=10, num_cols=7)
 headings = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
-daysofweek = [sg.Table(values=data[1:][:], headings=headings, max_col_width=25,
-                    background_color='dark blue',
-                    auto_size_columns=True,
-                    justification='center',
-                    num_rows=10,
-                    key='-TABLE-',
-                    row_height=25)
-    ]
+
 
 layout = [  
             title,
             [sg.Button('Add Pill'), ],
-            daysofweek,
+            [sg.Table(values=data[1:][:], headings=headings, max_col_width=25,
+              background_color='dark blue',
+              auto_size_columns=True,
+              justification='center',
+              num_rows=10,
+              key='-TABLE-',
+              row_height=25)],
             [sg.Button('Show', size=(8,2))],
             [sg.Button('Exit')]
-         ]
+]
 
 
 window = sg.Window('TAKE YOUR FUCKING PILLZ!!', 
