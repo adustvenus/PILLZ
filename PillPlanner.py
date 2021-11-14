@@ -63,17 +63,21 @@ holder = []
 price = []
 amountofpills = []
 
+
 pillzdata = open("Pillz.txt","r")
 readdata = pillzdata.readlines()
 rows = int(len(readdata)/5)
 
 for i in readdata:
     holder.append([i][0])
+
     if len(holder) == 5:
+        print(holder)
         table1data.append(holder)
-        price.append(holder[3])
-        amountofpills.append(holder[4])
+        price.append(int(holder[3])/int(holder[4]))
+        amountofpills.append(holder[3])
         holder = []
+
 
 amountofpills = [s.replace("\n", "") for s in amountofpills]
 weeklycost = 0
@@ -83,20 +87,22 @@ for i in amountofpills:
     i = int(i)
     weeklycost = i + weeklycost
 
+
+
 data1 = [["You", "Need", "To", "Add", "Your", "Pills", "Above"]]
 for i in range(rows):
     if table1data[i][1] == 'Sunday\n':
-                data1.append([(table1data[i][0]+table1data[i][2]), " ", " ", " ", " ", " ", " "])
+                data1.append([(table1data[i][0]+"$"+table1data[i][2]), " ", " ", " ", " ", " ", " "])
     if table1data[i][1] == 'Monday\n':
-                data1.append([" ", (table1data[i][0]+table1data[i][2]), " ", " ", " ", " ", " "])
+                data1.append([" ", (table1data[i][0]+"$"+table1data[i][2]), " ", " ", " ", " ", " "])
     if table1data[i][1] == 'Tuesday\n':
-                data1.append([" ", " ", (table1data[i][0]+table1data[i][2]), " ", " ", " ", " "])
+                data1.append([" ", " ", (table1data[i][0]+"$"+table1data[i][2]), " ", " ", " ", " "])
     if table1data[i][1] == 'Wednesday\n':
-                data1.append([" ", " ", " ", (table1data[i][0]+table1data[i][2]), " ", " ", " "])
+                data1.append([" ", " ", " ", (table1data[i][0]+"$"+table1data[i][2]), " ", " ", " "])
     if table1data[i][1] == 'Thursday\n':
-                data1.append([" ", " ", " ", " ", (table1data[i][0]+table1data[i][2]), " ", " "])
+                data1.append([" ", " ", " ", " ", (table1data[i][0]+"$"+table1data[i][2]), " ", " "])
     if table1data[i][1] == 'Friday\n':
-                data1.append([" ", " ", " ", " ", " ",(table1data[i][0]+table1data[i][2]), " "])
+                data1.append([" ", " ", " ", " ", " ",(table1data[i][0]+"$"+table1data[i][2]), " "])
     if table1data[i][1] == 'Saturday\n':
                 data1.append([" ", " ", " ", " ", " ", " ", (table1data[i][0]+"$" + table1data[i][2])])  
     if data1 != [["You", "Need", "To", "Add", "Your", "Pills", "Above"]] and data1[0] == ["You", "Need", "To", "Add", "Your", "Pills", "Above"]:
@@ -122,7 +128,7 @@ layout = [
               num_rows=rows,
               hide_vertical_scroll = True,
               key='-TABLE1-',
-              row_height=25)],
+              row_height=45)],
             
             [sg.Table(values=data2, headings=headings2, max_col_width=50,
               background_color='dark blue',
@@ -132,7 +138,7 @@ layout = [
               hide_vertical_scroll = True,
               key='-TABLE2-',
               row_height=20)],
-            [sg.Text('Price Per Week of medications:' + str(weeklycost))],
+            [sg.Text('Price Per Week of medications: $' + str(weeklycost))],
             [sg.Button('Exit')]
 ]
 
