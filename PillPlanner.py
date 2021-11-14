@@ -52,6 +52,9 @@ def pill_adder_button():
         event, values = window.read()
         if event == "Exit" or event == sg.WIN_CLOSED:
             break
+        if event == "med":
+            test = True
+            print(test)
         
         
     window.close()
