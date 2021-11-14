@@ -9,7 +9,7 @@ sg.theme= 'monoblue' # please make your windows colorful
 
 font = ("Impact", 31)
 
-title = [sg.Text('~ Pill Planner ~ ',
+title = [sg.Text('~ Pharm Tracker ~ ',
              size=(100,None),
              expand_x = True,
              justification='center',
@@ -26,7 +26,7 @@ def pill_adder_button():
     [sg.Text('Name', size =(15, 1)), sg.InputText()],
     [sg.Text('Day Taken', size =(15, 1)), sg.InputText()],
     [sg.Text('Amount Taken', size =(15, 1)), sg.InputText()],
-    [sg.Text('Price per Bottle/Unit', size =(15, 1)), sg.InputText()],
+    [sg.Text('Price per Bottle ($)', size =(15, 1)), sg.InputText()],
     [sg.Submit(), sg.Cancel()]
 ]
     window = sg.Window("Medication Adder", 
@@ -46,55 +46,79 @@ def pill_adder_button():
     pillz.write(values[3])
     pillz.write("\n")
 
-    pillz.close
+    pillz.close()
     return 
 #Title Page
 #
-def word():
-    return ''.join(random.choice(string.ascii_lowercase) for i in range(10))
-def number(max_val=1000):
-    return random.randint(0, max_val)
-
-def make_table1(num_rows, num_cols):
-    data = [[j for j in range(num_cols)] for i in range(num_rows)]
-    data[0] = [word() for __ in range(num_cols)]
-    for i in range(1, num_rows):
-        data[i] = [word(), *[number() for i in range(num_cols - 1)]]
-    return data
-
-def make_table2(num_rows, num_cols):
-    data = [[j for j in range(num_cols)] for i in range(num_rows)]
-    data[0] = [word() for __ in range(num_cols)]
-    for i in range(1, num_rows):
-        data[i] = [word(), *[number() for i in range(num_cols - 1)]]
-    return data
 
 
 # ------ Make the Table Data ------
-data = make_table1(num_rows=10, num_cols=7)
+
 headings = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
-Cost = make_table2(num_rows=2, num_cols= 2)
-headings2 = ['Pill', 'Cost']
+headings2 = ['Pill', 'Cost ($)']
 
+# ------ Table Data ------
+table1data = []
+holder = []
+
+
+pillzdata = open("Pillz.txt","r")
+readdata = pillzdata.readlines()
+rows = int(len(readdata)/4)
+
+for i in readdata:
+    holder.append([i][0])
+    if len(holder) == 4:
+        table1data.append(holder)
+        holder = []
+
+data1 = [["You", "Need", "To", "Add", "Your", "Pills", "Above"]]
+for i in range(rows):
+    if table1data[i][1] == 'Sunday\n':
+                data1.append([table1data[i][0], " ", " ", " ", " ", " ", " "])
+    if table1data[i][1] == 'Monday\n':
+                data1.append([" ", table1data[i][0], " ", " ", " ", " ", " "])
+    if table1data[i][1] == 'Tuesday\n':
+                data1.append([" ", " ", table1data[i][0], " ", " ", " ", " "])
+    if table1data[i][1] == 'Wednesday\n':
+                data1.append([" ", " ", " ", table1data[i][0], " ", " ", " "])
+    if table1data[i][1] == 'Thursday\n':
+                data1.append([" ", " ", " ", " ", table1data[i][0], " ", " "])
+    if table1data[i][1] == 'Friday\n':
+                data1.append([" ", " ", " ", " ", " ",table1data[i][0], " "])
+    if table1data[i][1] == 'Saturday\n':
+                data1.append([" ", " ", " ", " ", " ", " ", table1data[i][0]+table1data[i][2]])  
+    if data1 != [["You", "Need", "To", "Add", "Your", "Pills", "Above"]]:
+                data1.remove(["You", "Need", "To", "Add", "Your", "Pills", "Above"])
+print(data1)
+
+data2 = [["Input", "Pills"]]
+for i in range(rows):
+    if data1 !=[["You", "Need", "To", "Add", "Your", "Pills", "Above"]]:
+        data2.remove(["Input", "Pills"])
+        data2.append([table1data[i][0], table1data[i][3]])
+        
 layout = [  
             title,
             [sg.Button('Add Pill'), ],
-            [sg.Table(values=data[1:][:], headings=headings, max_col_width=25,
+            
+            [sg.Table(values=data1, headings=headings, max_col_width=25,
               background_color='dark blue',
               auto_size_columns=True,
               justification='center',
-              num_rows=10,
+              num_rows=rows,
               key='-TABLE1-',
               row_height=25)],
-            [sg.Table(values=data[1:][:], headings=headings2, max_col_width=50,
+            
+            [sg.Table(values=data2, headings=headings2, max_col_width=50,
               background_color='dark blue',
               auto_size_columns=True,
               justification='center',
               num_rows=2,
               key='-TABLE2-',
               row_height=20)],
-            [sg.Button('Show', size=(8,2))],
+            
             [sg.Button('Exit')]
 ]
 
