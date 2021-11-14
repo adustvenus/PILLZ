@@ -88,7 +88,6 @@ layout = [
               row_height=25)],
             [sg.Button('Show', size=(8,2))],
             [sg.Button('Exit')]
-
 ]
 
 
