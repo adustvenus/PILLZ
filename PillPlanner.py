@@ -22,43 +22,32 @@ title = [sg.Text('~ Pill Planner ~ ',
 #
 def pill_adder_button():
     layout = [
-        [sg.Text('Medication Name:')],
-        [sg.Input(key='-med-')],
-    
-    [
-        [sg.Text('Cost per Bottle/Unit:')],
-        [sg.Input(key='-cost-')]
-    ],
-    [
-        [sg.Text('Number of Pills/Doses per Day:')],
-        [sg.Input(key='-week-')]
-    ],
-    [
-        [sg.Text("Day of the Week Doses are Taken:")],
-        [sg.Input(key="-day-")]
-    ],
-    [
-        [sg.Button("Submit Medication")]
-    ]
+    [sg.Text("Please enter the medication's Name, Day Taken, Amount taken, and Price per bottle/unit")],
+    [sg.Text('Name', size =(15, 1)), sg.InputText()],
+    [sg.Text('Day Taken', size =(15, 1)), sg.InputText()],
+    [sg.Text('Amount Taken', size =(15, 1)), sg.InputText()],
+    [sg.Text('Price per Bottle/Unit', size =(15, 1)), sg.InputText()],
+    [sg.Submit(), sg.Cancel()]
 ]
-
     window = sg.Window("Medication Adder", 
                        layout,
                        size = (800, 500),
                        resizable = True,
                        modal = True)
-    while True:
-        event, values = window.read()
-        if event == "Exit" or event == sg.WIN_CLOSED:
-            break
-        if event == "med":
-            test = True
-            print(test)
-        
-        
+    event, values = window.read()
     window.close()
+    pillz = open("Pillz.txt","a+")
+    pillz.write(values[0])
+    pillz.write("\n")
+    pillz.write(values[1])
+    pillz.write("\n")
+    pillz.write(values[2])
+    pillz.write("\n")
+    pillz.write(values[3])
+    pillz.write("\n")
+
+    pillz.close
     return 
-#
 #Title Page
 #
 def word():
@@ -66,14 +55,14 @@ def word():
 def number(max_val=1000):
     return random.randint(0, max_val)
 
-def make_table(num_rows, num_cols):
+def make_table1(num_rows, num_cols):
     data = [[j for j in range(num_cols)] for i in range(num_rows)]
     data[0] = [word() for __ in range(num_cols)]
     for i in range(1, num_rows):
         data[i] = [word(), *[number() for i in range(num_cols - 1)]]
     return data
 
-def make_table(num_rows, num_cols):
+def make_table2(num_rows, num_cols):
     data = [[j for j in range(num_cols)] for i in range(num_rows)]
     data[0] = [word() for __ in range(num_cols)]
     for i in range(1, num_rows):
@@ -82,12 +71,11 @@ def make_table(num_rows, num_cols):
 
 
 # ------ Make the Table Data ------
-data = make_table(num_rows=10, num_cols=7)
+data = make_table1(num_rows=10, num_cols=7)
 headings = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
-Cost = make_table(num_rows=2, num_cols= 2)
-Headings = ('Pill', 'Cost', )
-
+Cost = make_table2(num_rows=2, num_cols= 2)
+headings2 = ['Pill', 'Cost']
 
 layout = [  
             title,
@@ -97,21 +85,21 @@ layout = [
               auto_size_columns=True,
               justification='center',
               num_rows=10,
-              key='-TABLE-',
+              key='-TABLE1-',
               row_height=25)],
-            [sg.Table(values=data[1:][:], headings=Headings, max_col_width=50,
+            [sg.Table(values=data[1:][:], headings=headings2, max_col_width=50,
               background_color='dark blue',
               auto_size_columns=True,
               justification='center',
               num_rows=2,
-              key='-TABLE-',
+              key='-TABLE2-',
               row_height=20)],
             [sg.Button('Show', size=(8,2))],
             [sg.Button('Exit')]
 ]
 
 
-window = sg.Window('TAKE YOUR FUCKING PILLZ!!', 
+window = sg.Window('Pharm-Tracker', 
                    layout,
                    size = (1000, 750),
                    resizable = False)
