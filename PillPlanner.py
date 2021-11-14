@@ -1,6 +1,4 @@
 import PySimpleGUI as sg
-import random
-import string
 sg.theme= 'monoblue' # please make your windows colorful
 
 #
@@ -27,6 +25,7 @@ def pill_adder_button():
     [sg.Text('Day Taken', size =(15, 1)), sg.InputText()],
     [sg.Text('Amount Taken', size =(15, 1)), sg.InputText()],
     [sg.Text('Price per Bottle ($)', size =(15, 1)), sg.InputText()],
+    [sg.Text('Amount in Bottle', size =(15, 1)), sg.InputText()],
     [sg.Submit(), sg.Cancel()]
 ]
     window = sg.Window("Medication Adder", 
@@ -45,12 +44,11 @@ def pill_adder_button():
     pillz.write("\n")
     pillz.write(values[3])
     pillz.write("\n")
+    pillz.write(values[4])
+    pillz.write("\n")
 
     pillz.close()
     return 
-#Title Page
-#
-
 
 # ------ Make the Table Data ------
 
@@ -61,34 +59,35 @@ headings2 = ['Pill', 'Cost ($)']
 # ------ Table Data ------
 table1data = []
 holder = []
-
+price = []
 
 pillzdata = open("Pillz.txt","r")
 readdata = pillzdata.readlines()
-rows = int(len(readdata)/4)
+rows = int(len(readdata)/5)
 
 for i in readdata:
     holder.append([i][0])
-    if len(holder) == 4:
+    if len(holder) == 5:
         table1data.append(holder)
+        price.append(holder[3])
         holder = []
 
 data1 = [["You", "Need", "To", "Add", "Your", "Pills", "Above"]]
 for i in range(rows):
     if table1data[i][1] == 'Sunday\n':
-                data1.append([table1data[i][0], " ", " ", " ", " ", " ", " "])
+                data1.append([(table1data[i][0]+table1data[i][2]), " ", " ", " ", " ", " ", " "])
     if table1data[i][1] == 'Monday\n':
-                data1.append([" ", table1data[i][0], " ", " ", " ", " ", " "])
+                data1.append([" ", (table1data[i][0]+table1data[i][2]), " ", " ", " ", " ", " "])
     if table1data[i][1] == 'Tuesday\n':
-                data1.append([" ", " ", table1data[i][0], " ", " ", " ", " "])
+                data1.append([" ", " ", (table1data[i][0]+table1data[i][2]), " ", " ", " ", " "])
     if table1data[i][1] == 'Wednesday\n':
-                data1.append([" ", " ", " ", table1data[i][0], " ", " ", " "])
+                data1.append([" ", " ", " ", (table1data[i][0]+table1data[i][2]), " ", " ", " "])
     if table1data[i][1] == 'Thursday\n':
-                data1.append([" ", " ", " ", " ", table1data[i][0], " ", " "])
+                data1.append([" ", " ", " ", " ", (table1data[i][0]+table1data[i][2]), " ", " "])
     if table1data[i][1] == 'Friday\n':
-                data1.append([" ", " ", " ", " ", " ",table1data[i][0], " "])
+                data1.append([" ", " ", " ", " ", " ",(table1data[i][0]+table1data[i][2]), " "])
     if table1data[i][1] == 'Saturday\n':
-                data1.append([" ", " ", " ", " ", " ", " ", table1data[i][0]+table1data[i][2]])  
+                data1.append([" ", " ", " ", " ", " ", " ", (table1data[i][0]+"$" + table1data[i][2])])  
     if data1 != [["You", "Need", "To", "Add", "Your", "Pills", "Above"]] and data1[0] == ["You", "Need", "To", "Add", "Your", "Pills", "Above"]:
                 data1.remove(["You", "Need", "To", "Add", "Your", "Pills", "Above"])
 print(data1)
@@ -99,16 +98,18 @@ for i in range(rows):
         data2.remove(["Input", "Pills"])
     if data2 != ["Input", "Pills"]:
         data2.append([table1data[i][0], table1data[i][3]])
-        
+
 layout = [  
             title,
-            [sg.Button('Add Pill'), ],
+            [sg.Button('Add Pill'), sg.Button('Refresh')],
             
             [sg.Table(values=data1, headings=headings, max_col_width=25,
               background_color='dark blue',
-              auto_size_columns=True,
+              auto_size_columns=False,
+              
               justification='center',
               num_rows=rows,
+              hide_vertical_scroll = True,
               key='-TABLE1-',
               row_height=25)],
             
@@ -116,24 +117,30 @@ layout = [
               background_color='dark blue',
               auto_size_columns=True,
               justification='center',
-              num_rows=2,
+              num_rows=rows,
+              hide_vertical_scroll = True,
               key='-TABLE2-',
               row_height=20)],
-            
+            #[sg.Text('Price Per Week of medications:' + ())]
             [sg.Button('Exit')]
 ]
+
+
 window = sg.Window('Pharm-Tracker', 
                    layout,
                    size = (1000, 750),
-                   resizable = False)
-
+                   element_justification = "center",
+                   resizable = True)
 
 
 
 while True:  # Event Loop
 
+
     event, values = window.read()
     print(event, values)
+    if event == 'Refresh Page':
+        window.Refresh()
     if event == sg.WIN_CLOSED or event == 'Exit':
         break
     if event == 'Add Pill':
