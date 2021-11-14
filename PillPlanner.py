@@ -89,14 +89,15 @@ for i in range(rows):
                 data1.append([" ", " ", " ", " ", " ",table1data[i][0], " "])
     if table1data[i][1] == 'Saturday\n':
                 data1.append([" ", " ", " ", " ", " ", " ", table1data[i][0]+table1data[i][2]])  
-    if data1 != [["You", "Need", "To", "Add", "Your", "Pills", "Above"]]:
+    if data1 != [["You", "Need", "To", "Add", "Your", "Pills", "Above"]] and data1[0] == ["You", "Need", "To", "Add", "Your", "Pills", "Above"]:
                 data1.remove(["You", "Need", "To", "Add", "Your", "Pills", "Above"])
 print(data1)
 
 data2 = [["Input", "Pills"]]
 for i in range(rows):
-    if data1 !=[["You", "Need", "To", "Add", "Your", "Pills", "Above"]]:
+    if data1 !=[["You", "Need", "To", "Add", "Your", "Pills", "Above"]] and data2[0] ==["Input", "Pills"]:
         data2.remove(["Input", "Pills"])
+    if data2 != ["Input", "Pills"]:
         data2.append([table1data[i][0], table1data[i][3]])
         
 layout = [  
@@ -121,8 +122,6 @@ layout = [
             
             [sg.Button('Exit')]
 ]
-
-
 window = sg.Window('Pharm-Tracker', 
                    layout,
                    size = (1000, 750),
@@ -130,7 +129,9 @@ window = sg.Window('Pharm-Tracker',
 
 
 
+
 while True:  # Event Loop
+
     event, values = window.read()
     print(event, values)
     if event == sg.WIN_CLOSED or event == 'Exit':
