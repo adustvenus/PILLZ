@@ -88,7 +88,7 @@ for i in amountofpills:
     i = int(i)
     weeklycost = price[k]*i +weeklycost
     k+=1
-
+weeklycost = "{:.2f}".format(weeklycost)
 
 
 data1 = [["You", "Need", "To", "Add", "Your", "Pills", "Above"]]
