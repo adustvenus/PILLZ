@@ -75,9 +75,6 @@ def make_table(num_rows, num_cols):
 data = make_table(num_rows=10, num_cols=7)
 headings = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
-
-#headings = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-
 daysofweek = [sg.Table(values=data[1:][:], headings=headings, max_col_width=25,
                     background_color='dark blue',
                     auto_size_columns=True,
