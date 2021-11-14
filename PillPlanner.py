@@ -1,6 +1,7 @@
 import PySimpleGUI as sg
 import random
 import string
+
 sg.theme= 'monoblue' # please make your windows colorful
 
 #
@@ -41,7 +42,7 @@ def pill_adder_button():
         [sg.Button("Submit Medication")]
     ]
 ]
-
+    pillz = {}
     window = sg.Window("Medication Adder", 
                        layout,
                        size = (800, 500),
@@ -54,7 +55,7 @@ def pill_adder_button():
         
         
     window.close()
-    return 
+    return  pillz
 #
 #Title Page
 #
@@ -89,7 +90,7 @@ daysofweek = [sg.Table(values=data[1:][:], headings=headings, max_col_width=25,
 layout = [  
             title,
             [sg.Button('Add Pill'), ],
-            [daysofweek, (justification ='center')],
+            daysofweek,
             [sg.Button('Show', size=(8,2))],
             [sg.Button('Exit')]
          ]
