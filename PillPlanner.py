@@ -75,36 +75,38 @@ for i in readdata:
         print(holder)
         table1data.append(holder)
         price.append(int(holder[3])/int(holder[4]))
-        amountofpills.append(holder[3])
+        amountofpills.append(holder[2])
         holder = []
 
 
 amountofpills = [s.replace("\n", "") for s in amountofpills]
 weeklycost = 0
+k = 0
 for i in amountofpills:
     if i == "":
         i=0
     i = int(i)
-    weeklycost = i + weeklycost
+    weeklycost = price[k]*i +weeklycost
+    k+=1
 
 
 
 data1 = [["You", "Need", "To", "Add", "Your", "Pills", "Above"]]
 for i in range(rows):
     if table1data[i][1] == 'Sunday\n':
-                data1.append([(table1data[i][0]+"$"+table1data[i][2]), " ", " ", " ", " ", " ", " "])
+                data1.append([(table1data[i][0]+table1data[i][2]), " ", " ", " ", " ", " ", " "])
     if table1data[i][1] == 'Monday\n':
-                data1.append([" ", (table1data[i][0]+"$"+table1data[i][2]), " ", " ", " ", " ", " "])
+                data1.append([" ", (table1data[i][0]+table1data[i][2]), " ", " ", " ", " ", " "])
     if table1data[i][1] == 'Tuesday\n':
-                data1.append([" ", " ", (table1data[i][0]+"$"+table1data[i][2]), " ", " ", " ", " "])
+                data1.append([" ", " ", (table1data[i][0]+table1data[i][2]), " ", " ", " ", " "])
     if table1data[i][1] == 'Wednesday\n':
-                data1.append([" ", " ", " ", (table1data[i][0]+"$"+table1data[i][2]), " ", " ", " "])
+                data1.append([" ", " ", " ", (table1data[i][0]+table1data[i][2]), " ", " ", " "])
     if table1data[i][1] == 'Thursday\n':
-                data1.append([" ", " ", " ", " ", (table1data[i][0]+"$"+table1data[i][2]), " ", " "])
+                data1.append([" ", " ", " ", " ", (table1data[i][0]+table1data[i][2]), " ", " "])
     if table1data[i][1] == 'Friday\n':
                 data1.append([" ", " ", " ", " ", " ",(table1data[i][0]+"$"+table1data[i][2]), " "])
     if table1data[i][1] == 'Saturday\n':
-                data1.append([" ", " ", " ", " ", " ", " ", (table1data[i][0]+"$" + table1data[i][2])])  
+                data1.append([" ", " ", " ", " ", " ", " ", (table1data[i][0] + table1data[i][2])])  
     if data1 != [["You", "Need", "To", "Add", "Your", "Pills", "Above"]] and data1[0] == ["You", "Need", "To", "Add", "Your", "Pills", "Above"]:
                 data1.remove(["You", "Need", "To", "Add", "Your", "Pills", "Above"])
 print(data1)
@@ -120,7 +122,7 @@ layout = [
             title,
             [sg.Button('Add Pill'), sg.Button('Refresh')],
             
-            [sg.Table(values=data1, headings=headings, max_col_width=25,
+            [sg.Table(values=data1, headings=headings, max_col_width=30,
               background_color='dark blue',
               auto_size_columns=False,
               
@@ -155,11 +157,13 @@ while True:  # Event Loop
     event, values = window.read()
     print(event, values)
     if event == 'Refresh':
+        window['-TABLE2-'].Update(rows)
         print("FUCK")
     if event == sg.WIN_CLOSED or event == 'Exit':
         break
     if event == 'Add Pill':
         # change the "output" element to be the value of "input" element
         pill_adder_button()
+
 
 window.close()
