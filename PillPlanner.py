@@ -73,10 +73,20 @@ def make_table(num_rows, num_cols):
         data[i] = [word(), *[number() for i in range(num_cols - 1)]]
     return data
 
+def make_table(num_rows, num_cols):
+    data = [[j for j in range(num_cols)] for i in range(num_rows)]
+    data[0] = [word() for __ in range(num_cols)]
+    for i in range(1, num_rows):
+        data[i] = [word(), *[number() for i in range(num_cols - 1)]]
+    return data
+
+
 # ------ Make the Table Data ------
 data = make_table(num_rows=10, num_cols=7)
 headings = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
+Cost = make_table(num_rows=2, num_cols= 2)
+Headings = ('Pill', 'Cost', )
 
 
 layout = [  
@@ -89,6 +99,13 @@ layout = [
               num_rows=10,
               key='-TABLE-',
               row_height=25)],
+            [sg.Table(values=data[1:][:], headings=Headings, max_col_width=50,
+              background_color='dark blue',
+              auto_size_columns=True,
+              justification='center',
+              num_rows=2,
+              key='-TABLE-',
+              row_height=20)],
             [sg.Button('Show', size=(8,2))],
             [sg.Button('Exit')]
 ]
